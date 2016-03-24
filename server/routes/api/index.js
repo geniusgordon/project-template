@@ -1,11 +1,13 @@
 const express = require('express');
-const User = require('../../models/user');
+const userController = require('../../controllers/user');
 
 const router = new express.Router();
 
 router.get('/', (req, res) => {
-  User.find({}, (err, users) => {
+  userController.all().then((users) => {
     res.status(200).json(users);
+  }).then((err) => {
+    res.status(500).json(err);
   });
 });
 
