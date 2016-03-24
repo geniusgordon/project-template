@@ -1,4 +1,4 @@
-module.exports = function socketConfig(io, store) {
+module.exports = function socketConfig(store) {
   const cookieParser = require('cookie-parser');
   const passportSocketIo = require('passport.socketio');
 
@@ -15,14 +15,12 @@ module.exports = function socketConfig(io, store) {
     }
   }
 
-  io.use(passportSocketIo.authorize({
+  return passportSocketIo.authorize({
     store,
     cookieParser,
     secret: 'NAME-secret',
     success: onAuthorizeSuccess,
     fail: onAuthorizeFail,
-  }));
-
-  return io;
+  });
 };
 

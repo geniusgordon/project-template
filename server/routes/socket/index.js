@@ -1,10 +1,9 @@
-module.exports = function socketRouter(io) {
-  io.on('connection', (socket) => {
-    io.log('info', 'socket client connected');
+const logger = require('../../logger')('socket');
 
-    socket.on('disconnect', () => {
-      io.log('info', 'socket client disconnected');
-    });
+module.exports = function socketRouter(socket) {
+  logger.info('socket client connected');
+  socket.on('disconnect', () => {
+    logger.info('socket client disconnected');
   });
 };
 

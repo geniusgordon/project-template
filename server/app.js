@@ -16,8 +16,11 @@ const MongoStore = require('connect-mongo')(session);
 const mongoStore = new MongoStore({
   mongooseConnection: mongoose.connection,
 });
+const passportSocketIo = require('./config/socket')(mongoStore);
+const io = require('socket.io');
 
 const routes = require('./routes');
+const socketRoutes = require('./routes/socket');
 
 const app = express();
 
@@ -31,8 +34,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.io = require('./socket')(mongoStore);
-require('./routes/socket')(app.io);
+app.io = io();
+app.io.use(passportSocketIo);
+app.io.on('connection', socketRoutes);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
