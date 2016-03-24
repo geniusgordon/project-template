@@ -5,6 +5,7 @@
     "start": "node ./server/bin/www",
     "start:test": "export NODE_ENV=test && node ./server/bin/www",
     "build:client": "./node_modules/.bin/webpack",
+    "test": "npm run test:server",
     "test:server": "export NODE_ENV=test && ./node_modules/.bin/mocha --recursive ./server/tests",
     "lint:server": "./node_modules/.bin/eslint ./server"
   },
